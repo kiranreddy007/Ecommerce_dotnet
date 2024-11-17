@@ -17,6 +17,10 @@ namespace EcommerceBackend.Services
         {
             return _userRepository.GetAllUsers();
         }
+        public User GetUserByEmail(string email)
+        {
+            return _userRepository.GetUserByEmail(email);
+        }
 
         public User GetUserByUsername(string username)
         {

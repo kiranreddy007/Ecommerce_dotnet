@@ -154,3 +154,4 @@
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.pdb
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.genruntimeconfig.cache
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/ref/EcommerceBackend.dll
+/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Ecom.postman_collection.json

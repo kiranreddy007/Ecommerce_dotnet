@@ -54,19 +54,19 @@ namespace EcommerceBackend.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
-        {
-            var existingUser = _userService.GetUserByUsername(request.Username);
-            if (existingUser == null || !PasswordHasher.VerifyPassword(request.Password, existingUser.Password))
-            {
-                return BadRequest(new { message = "Invalid username or password" });
-            }
+public IActionResult Login([FromBody] LoginRequest request)
+{
+    var existingUser = _userService.GetUserByEmail(request.Email);
+    if (existingUser == null || !PasswordHasher.VerifyPassword(request.Password, existingUser.Password))
+    {
+        return BadRequest(new { message = "Invalid email or password" });
+    }
 
-            var role = existingUser.Role;
-            var token = JwtHelper.GenerateJwtToken(existingUser.Username,role,existingUser.Id);
+    var role = existingUser.Role;
+    var token = JwtHelper.GenerateJwtToken(existingUser.Email, role, existingUser.Id);
 
-            return Ok(new { token });
-        }
+    return Ok(new { token });
+}
 
         [HttpPut("{id}")]
         [Authorize] // Only authenticated users can update their profile

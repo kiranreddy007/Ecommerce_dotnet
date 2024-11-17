@@ -22,6 +22,11 @@ namespace EcommerceBackend.Repositories
             return _context.Users.FirstOrDefault(u => u.Username == username);
         }
 
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email);
+        }
+
         public User GetUserById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
