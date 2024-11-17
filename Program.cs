@@ -32,6 +32,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>(); // Add this line
 builder.Services.AddScoped<ICartRepository, CartRepository>(); 
 
+builder.Services.AddScoped<IOrderService, OrderService>(); // Add this line
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 

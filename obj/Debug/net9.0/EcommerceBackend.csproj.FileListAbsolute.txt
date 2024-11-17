@@ -6,6 +6,7 @@
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/EcommerceBackend.runtimeconfig.json
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/EcommerceBackend.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/EcommerceBackend.pdb
+/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/DotNetEnv.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Humanizer.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
@@ -32,6 +33,7 @@
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Microsoft.OpenApi.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Mono.TextTemplating.dll
+/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Sprache.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/SQLitePCLRaw.batteries_v2.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/SQLitePCLRaw.core.dll
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/SQLitePCLRaw.provider.e_sqlite3.dll
@@ -135,6 +137,7 @@
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.csproj.CoreCompileInputs.cache
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.MvcApplicationPartsAssemblyInfo.cs
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.MvcApplicationPartsAssemblyInfo.cache
+/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.sourcelink.json
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/scopedcss/bundle/EcommerceBackend.styles.css
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/staticwebassets.build.json
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/staticwebassets.development.json
@@ -151,6 +154,3 @@
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.pdb
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.genruntimeconfig.cache
 /Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/ref/EcommerceBackend.dll
-/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/DotNetEnv.dll
-/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/bin/Debug/net9.0/Sprache.dll
-/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/obj/Debug/net9.0/EcommerceBackend.sourcelink.json

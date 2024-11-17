@@ -1,7 +1,8 @@
 using EcommerceBackend.Data;
 using EcommerceBackend.Models;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EcommerceBackend.Repositories
 {
@@ -14,7 +15,7 @@ namespace EcommerceBackend.Repositories
             _context = context;
         }
 
-        public Cart? GetCartByUserId(int userId)
+        public Cart GetCartByUserId(int userId)
         {
             return _context.Carts
                 .Include(c => c.CartItems)
@@ -29,20 +30,10 @@ namespace EcommerceBackend.Repositories
         }
 
         public void AddToCart(CartItem cartItem)
-{
-    // Validate Cart existence
-    var cart = _context.Carts.FirstOrDefault(c => c.Id == cartItem.CartId);
-    if (cart == null)
-        throw new Exception($"Cart with ID {cartItem.CartId} does not exist.");
-
-    // Validate Product existence
-    var product = _context.Products.FirstOrDefault(p => p.Id == cartItem.ProductId);
-    if (product == null)
-        throw new Exception($"Product with ID {cartItem.ProductId} does not exist.");
-
-    _context.CartItems.Add(cartItem);
-    _context.SaveChanges();
-}
+        {
+            _context.CartItems.Add(cartItem);
+            _context.SaveChanges();
+        }
 
         public void UpdateCartItem(CartItem cartItem)
         {
@@ -62,10 +53,29 @@ namespace EcommerceBackend.Repositories
 
         public void ClearCart(int userId)
         {
-            var cart = GetCartByUserId(userId);
-            if (cart != null)
+            var cart = _context.Carts.Include(c => c.CartItems)
+                                      .FirstOrDefault(c => c.UserId == userId);
+            if (cart != null && cart.CartItems.Any())
             {
                 _context.CartItems.RemoveRange(cart.CartItems);
+                _context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<CartItem> GetCartItemsByIds(List<int> cartItemIds)
+{
+    return _context.CartItems
+        .Include(ci => ci.Product)
+        .Where(ci => ci != null && cartItemIds.Contains(ci.Id))
+        .ToList();
+}
+
+        public void RemoveCartItems(List<int> cartItemIds)
+        {
+            var cartItems = _context.CartItems.Where(ci => cartItemIds.Contains(ci.Id)).ToList();
+            if (cartItems.Any())
+            {
+                _context.CartItems.RemoveRange(cartItems);
                 _context.SaveChanges();
             }
         }
