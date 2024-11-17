@@ -18,6 +18,17 @@ namespace EcommerceBackend.Controllers
             _userService = userService;
         }
 
+       [Authorize(Roles = "Admin")]
+        [HttpGet("all")]
+        public IActionResult GetAllUsers()
+        {
+            var users = _userService.GetAllUsers();
+            return Ok(users);
+        }
+
+
+
+
         [HttpGet("{id}")]
         [Authorize] // Only authenticated users can access
         public IActionResult GetUserById(int id)
@@ -52,7 +63,7 @@ namespace EcommerceBackend.Controllers
             }
 
             var role = existingUser.Role;
-            var token = JwtHelper.GenerateJwtToken(existingUser.Username, role);
+            var token = JwtHelper.GenerateJwtToken(existingUser.Username,role,existingUser.Id);
 
             return Ok(new { token });
         }

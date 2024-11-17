@@ -28,6 +28,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
+
+builder.Services.AddScoped<ICartService, CartService>(); // Add this line
+builder.Services.AddScoped<ICartRepository, CartRepository>(); 
+
+builder.Services.AddEndpointsApiExplorer();
+
+
 // Configure Authentication with JWT Bearer
 var jwtSecret=Environment.GetEnvironmentVariable("JWT_SECRET") ?? throw new Exception("JWT_SECRET is not set in .env file");
 
@@ -48,12 +55,17 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-// Add controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
 
 // Build the application
 var app = builder.Build();
-Console.WriteLine($"JWT_SECRET: {Environment.GetEnvironmentVariable("JWT_SECRET")}");
+
 // Configure middleware pipeline
 app.UseAuthentication(); // Enable JWT Authentication
 app.UseAuthorization();  // Enable Authorization

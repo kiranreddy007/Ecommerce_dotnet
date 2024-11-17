@@ -13,6 +13,11 @@ namespace EcommerceBackend.Services
             _userRepository = userRepository;
         }
 
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _userRepository.GetAllUsers();
+        }
+
         public User GetUserByUsername(string username)
         {
             return _userRepository.GetUserByUsername(username);

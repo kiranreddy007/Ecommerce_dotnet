@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,57 +13,71 @@ namespace EcommerceBackend.Utils
         private static readonly string SecretKey;
         private static readonly string Issuer;
         private static readonly string Audience;
+        private static readonly int TokenExpirationHours;
 
-        // Static constructor to load environment variables and perform initialization
+        // Static constructor for initialization
         static JwtHelper()
         {
-            // Load the .env file
+            // Load environment variables
             Env.Load();
 
-            // Retrieve environment variables
+            // Get required environment variables
             SecretKey = Environment.GetEnvironmentVariable("JWT_SECRET") 
                         ?? throw new Exception("JWT_SECRET is not set in the environment.");
             Issuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? "yourapp";
             Audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? "yourapp";
+            TokenExpirationHours = int.Parse(Environment.GetEnvironmentVariable("JWT_EXPIRATION_HOURS") ?? "1");
 
-            // Log the loaded values for debugging (DO NOT log the actual secret in production)
-            Console.WriteLine($"[JwtHelper] JWT_SECRET Length: {SecretKey.Length}");
-            Console.WriteLine($"[JwtHelper] JWT_ISSUER: {Issuer}");
-            Console.WriteLine($"[JwtHelper] JWT_AUDIENCE: {Audience}");
-
-            // Ensure the secret key is long enough
+            // Ensure the secret key is strong enough
             if (SecretKey.Length < 32)
             {
                 throw new Exception("JWT_SECRET must be at least 32 characters long.");
             }
         }
 
-        public static string GenerateJwtToken(string username, string role)
+        public static string GenerateJwtToken(string username, string role, int userId, Dictionary<string, string>? additionalClaims = null)
         {
-            Console.WriteLine($"[JwtHelper] Generating token for user: {username}, role: {role}");
+            // Log token generation start (replace with a proper logger in production)
+            Console.WriteLine($"[JwtHelper] Generating token for user: {username}, role: {role}, userId: {userId}");
 
-            // Define claims
-            var claims = new[]
+            // Define basic claims
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, role)
+                new Claim(ClaimTypes.Role, role),
+                new Claim("Id", userId.ToString()) // Custom claim for User ID
             };
+
+            // Add any additional claims provided
+            if (additionalClaims != null)
+            {
+                foreach (var claim in additionalClaims)
+                {
+                    claims.Add(new Claim(claim.Key, claim.Value));
+                }
+            }
 
             // Create signing key
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            // Generate the JWT token
-            var token = new JwtSecurityToken(
-                issuer: Issuer,
-                audience: Audience,
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: creds
-            );
+            // Define token descriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(TokenExpirationHours), // Configurable expiration time
+                NotBefore = DateTime.UtcNow, // Optional: Prevent token use before current time
+                Issuer = Issuer,
+                Audience = Audience,
+                SigningCredentials = creds
+            };
+
+            // Generate and return the token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
 
             Console.WriteLine("[JwtHelper] Token generated successfully.");
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

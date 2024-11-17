@@ -13,6 +13,10 @@ namespace EcommerceBackend.Repositories
             _context = context;
         }
 
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
         public User GetUserByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username);
