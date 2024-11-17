@@ -22,7 +22,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add scoped services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<AuthService>();
+
+
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Configure Authentication with JWT Bearer
 var jwtSecret=Environment.GetEnvironmentVariable("JWT_SECRET") ?? throw new Exception("JWT_SECRET is not set in .env file");

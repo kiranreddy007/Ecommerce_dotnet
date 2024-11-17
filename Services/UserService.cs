@@ -1,4 +1,3 @@
-using EcommerceBackend.DTOs;
 using EcommerceBackend.Models;
 using EcommerceBackend.Repositories;
 using EcommerceBackend.Utils;
@@ -14,68 +13,32 @@ namespace EcommerceBackend.Services
             _userRepository = userRepository;
         }
 
-        public (bool Success, string Message) RegisterUser(RegisterRequest request)
+        public User GetUserByUsername(string username)
         {
-            // Log the registration attempt
-            Console.WriteLine($"Attempting to register user: {request.Username}");
-
-            // Validate the input
-            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
-            {
-                Console.WriteLine("Validation failed: Username or password is empty.");
-                return (false, "Username and password are required");
-            }
-
-            // Check if username already exists
-            if (_userRepository.GetUserByUsername(request.Username) != null)
-            {
-                Console.WriteLine($"Validation failed: Username {request.Username} is already taken.");
-                return (false, "Username is already taken");
-            }
-
-            // Hash the password
-            var hashedPassword = PasswordHasher.HashPassword(request.Password);
-
-            // Create and save the user
-            var user = new User
-            {
-                Username = request.Username,
-                PasswordHash = hashedPassword,
-                Role = "User"
-            };
-
-            _userRepository.AddUser(user);
-            Console.WriteLine($"User {request.Username} registered successfully.");
-
-            return (true, "User registered successfully");
+            return _userRepository.GetUserByUsername(username);
         }
 
-        public string LoginUser(LoginRequest request)
+        public User GetUserById(int id)
         {
-            // Log the login attempt
-            Console.WriteLine($"Attempting login for user: {request.Username}");
+            return _userRepository.GetUserById(id);
+        }
 
-            // Fetch the user from the repository
-            var user = _userRepository.GetUserByUsername(request.Username);
-            if (user == null)
+        public void RegisterUser(User user)
+        {
+            user.Password = PasswordHasher.HashPassword(user.Password);
+            _userRepository.AddUser(user);
+        }
+
+        public void UpdateUser(User user)
+        {
+            var existingUser = _userRepository.GetUserById(user.Id);
+            if (existingUser != null)
             {
-                Console.WriteLine("Login failed: User not found.");
-                return null;
+                existingUser.Email = user.Email;
+                existingUser.PhoneNumber = user.PhoneNumber;
+                existingUser.Role = user.Role; // Allow role updates if needed
+                _userRepository.UpdateUser(existingUser);
             }
-
-            // Validate the password
-            if (!PasswordHasher.VerifyPassword(request.Password, user.PasswordHash))
-            {
-                Console.WriteLine("Login failed: Invalid password.");
-                return null;
-            }
-
-            // Generate a JWT token for the user
-            Console.WriteLine("Login successful: Generating JWT token.");
-            var token = JwtHelper.GenerateJwtToken(user.Username, user.Role);
-
-            Console.WriteLine("JWT token generated successfully.");
-            return token;
         }
     }
 }
