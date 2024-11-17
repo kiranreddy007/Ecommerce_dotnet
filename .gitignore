@@ -5,6 +5,8 @@
 /bin
 /obj
 
+!/obj/project.assets.json
+
 # User-specific files
 *.user
 *.rsuser
