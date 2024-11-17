@@ -72,7 +72,7 @@ var app = builder.Build();
 // Configure middleware pipeline
 app.UseAuthentication(); // Enable JWT Authentication
 app.UseAuthorization();  // Enable Authorization
-
+app.UseStaticFiles(); // Enable serving static files from wwwroot
 // Map controller routes
 app.MapControllers();
 
