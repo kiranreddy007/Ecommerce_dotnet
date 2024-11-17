@@ -3,6 +3,7 @@ using EcommerceBackend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using EcommerceBackend.Repositories;
 
 namespace EcommerceBackend.Controllers
 {
@@ -12,10 +13,16 @@ namespace EcommerceBackend.Controllers
     {
         private readonly IProductService _productService;
 
-        public ProductsController(IProductService productService)
+        private readonly IProductRepository _productRepository;
+
+
+
+        public ProductsController(IProductService productService, IProductRepository productRepository)
         {
             _productService = productService;
+            _productRepository = productRepository;
         }
+        
 
         [HttpGet]
         public IActionResult GetFilteredProducts([FromQuery] string? category, [FromQuery] string? search,
@@ -39,24 +46,99 @@ namespace EcommerceBackend.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult AddProduct([FromBody] Product product)
+public IActionResult AddProduct([FromForm] Product product, IFormFile imageFile)
+{
+    if (product == null)
+    {
+        return BadRequest("Invalid product data.");
+    }
+
+    if (imageFile != null)
+    {
+        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+        if (!Directory.Exists(uploadPath))
         {
-            _productService.AddProduct(product);
-            return Ok(new { message = "Product added successfully" });
+            Directory.CreateDirectory(uploadPath);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, [FromBody] Product product)
+        var fileName = $"{Guid.NewGuid()}_{imageFile.FileName}";
+        var filePath = Path.Combine(uploadPath, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
         {
-            if (_productService.GetProductById(id) == null)
-            {
-                return NotFound(new { message = "Product not found" });
-            }
-            product.Id = id;
-            _productService.UpdateProduct(product);
-            return Ok(new { message = "Product updated successfully" });
+            imageFile.CopyTo(stream);
         }
+
+        product.ImagePath = Path.Combine("images", fileName); // Save relative path
+    }
+
+    _productRepository.AddProduct(product);
+    return Ok(new { message = "Product added successfully." });
+}
+
+        [Authorize(Roles = "Admin")]
+[HttpPut("{id}")]
+public IActionResult UpdateProduct(int id, [FromForm] Product product, IFormFile? imageFile)
+{
+    // Ensure the product exists
+    var existingProduct = _productRepository.GetProductById(id);
+    if (existingProduct == null)
+    {
+        return NotFound(new { message = "Product not found." });
+    }
+
+    // Update only the provided fields
+    if (!string.IsNullOrEmpty(product.Name))
+    {
+        existingProduct.Name = product.Name;
+    }
+    if (!string.IsNullOrEmpty(product.Category))
+    {
+        existingProduct.Category = product.Category;
+    }
+    if (!string.IsNullOrEmpty(product.Description))
+    {
+        existingProduct.Description = product.Description;
+    }
+    if (product.Price > 0)
+    {
+        existingProduct.Price = product.Price;
+    }
+    if (product.Stock > 0)
+    {
+        existingProduct.Stock = product.Stock;
+    }
+    if (product.Discount != null)
+    {
+        existingProduct.Discount = product.Discount;
+    }
+
+    // Handle image upload if provided
+    if (imageFile != null)
+    {
+        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+        if (!Directory.Exists(uploadPath))
+        {
+            Directory.CreateDirectory(uploadPath);
+        }
+
+        var fileName = $"{Guid.NewGuid()}_{imageFile.FileName}";
+        var filePath = Path.Combine(uploadPath, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            imageFile.CopyTo(stream);
+        }
+
+        existingProduct.ImagePath = Path.Combine("images", fileName); // Update image path
+    }
+    Console.WriteLine("product" + existingProduct);
+
+    // Save the updated product
+    _productRepository.UpdateProduct(existingProduct);
+
+    return Ok(new { message = "Product updated successfully." });
+}
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
@@ -69,5 +151,32 @@ namespace EcommerceBackend.Controllers
             _productService.DeleteProduct(id);
             return Ok(new { message = "Product deleted successfully" });
         }
+
+
+        [HttpPost("upload-image")]
+public async Task<IActionResult> UploadImage(IFormFile file)
+{
+    if (file == null || file.Length == 0)
+    {
+        return BadRequest("No file uploaded.");
+    }
+
+    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+    if (!Directory.Exists(uploadPath))
+    {
+        Directory.CreateDirectory(uploadPath);
+    }
+
+    var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+    var filePath = Path.Combine(uploadPath, fileName);
+
+    using (var stream = new FileStream(filePath, FileMode.Create))
+    {
+        await file.CopyToAsync(stream);
+    }
+
+    var relativePath = Path.Combine("images", fileName);
+    return Ok(new { imagePath = relativePath });
+}
     }
 }

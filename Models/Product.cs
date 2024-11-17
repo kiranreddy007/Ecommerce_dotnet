@@ -19,5 +19,7 @@ namespace EcommerceBackend.Models
         public int Stock { get; set; }
 
         public decimal? Discount { get; set; } // Added for filtering by discount
+
+         public string? ImagePath { get; set; } 
     }
 }

@@ -66,8 +66,18 @@ namespace EcommerceBackend.Repositories
 
         public void UpdateProduct(Product product)
         {
-            _context.Products.Update(product);
-            _context.SaveChanges();
+            var existingProduct = _context.Products.FirstOrDefault(p => p.Id == product.Id);
+    if (existingProduct != null)
+    {
+        existingProduct.Name = product.Name;
+        existingProduct.Price = product.Price;
+        existingProduct.Description = product.Description;
+        existingProduct.Category = product.Category;
+        existingProduct.Stock = product.Stock;
+        existingProduct.Discount = product.Discount;
+        existingProduct.ImagePath = product.ImagePath; // Update the image path
+        _context.SaveChanges();
+    }
         }
 
         public void DeleteProduct(int id)

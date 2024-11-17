@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/EcommerceBackend/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.e0qbkuqu98.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"e0qbkuqu98"},{"Name":"integrity","Value":"sha256-bkS0EREQW/t38lfMt9ADBRlHL0KagVWQdd5rii04HgA="},{"Name":"label","Value":"_content/EcommerceBackend/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"10023"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022bkS0EREQW/t38lfMt9ADBRlHL0KagVWQdd5rii04HgA=\u0022"},{"Name":"Last-Modified","Value":"Sun, 17 Nov 2024 17:32:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/EcommerceBackend/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-bkS0EREQW/t38lfMt9ADBRlHL0KagVWQdd5rii04HgA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"10023"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022bkS0EREQW/t38lfMt9ADBRlHL0KagVWQdd5rii04HgA=\u0022"},{"Name":"Last-Modified","Value":"Sun, 17 Nov 2024 17:32:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>
