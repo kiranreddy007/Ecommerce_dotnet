@@ -1,1 +1,37 @@
+# Environment variables
 .env
+
+# Build directories
+/bin
+/obj
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+
+# Logs
+*.log
+logs/
+
+# IDE-specific files
+.vscode/
+.idea/
+*.csproj.user
+
+# Dependency directories
+packages/
+node_modules/
+
+# Generated files
+*.dll
+*.pdb
+*.exe
+*.cache
+*.tmp
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+

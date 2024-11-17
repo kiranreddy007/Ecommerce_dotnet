@@ -94,11 +94,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdEFkbWluIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzE4MjExOTMsImlzcyI6InlvdXJhcHAiLCJhdWQiOiJ5b3VyYXBwIn0.YaMMq0gXY4BBIKPZA4uEwCGgo0FLYqPt5GYjPZ9C1g8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"testuserOne\",\n  \"password\": \"TestPassword123\"\n}",
+							"raw": "{\n  \"email\": \"testuser2@example.com\",\n  \"password\": \"TestPassword123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -152,7 +162,7 @@
 					]
 				},
 				{
-					"name": "login Copy",
+					"name": "users",
 					"event": [
 						{
 							"listen": "test",
@@ -175,8 +185,21 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdEFkbWluIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzE4Mjg5OTEsImlzcyI6InlvdXJhcHAiLCJhdWQiOiJ5b3VyYXBwIn0.Hb28kyHEewYfVUrpTuE3U71jaDulCAZ4UBJbY2AzcSA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -188,14 +211,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseurl}}/api/users/login",
+							"raw": "{{baseurl}}/api/users/all",
 							"host": [
 								"{{baseurl}}"
 							],
 							"path": [
 								"api",
 								"users",
-								"login"
+								"all"
 							]
 						}
 					},
@@ -270,6 +293,45 @@
 							"path": [
 								"api",
 								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Dolo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/products/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
 							]
 						}
 					},

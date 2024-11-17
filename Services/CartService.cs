@@ -67,7 +67,14 @@ namespace EcommerceBackend.Services
             if (cartItem != null && quantity > 0)
             {
                 cartItem.Quantity = quantity;
-                cartItem.Price = quantity * cartItem.Product.Price;
+                if (cartItem.Product != null)
+                {
+                    cartItem.Price = quantity * cartItem.Product.Price;
+                }
+                else
+                {
+                    throw new Exception("Product associated with the cart item is null.");
+                }
                 _cartRepository.UpdateCartItem(cartItem);
             }
         }

@@ -9,12 +9,12 @@ namespace EcommerceBackend.Models
         [Required]
         public int CartId { get; set; } // Foreign key linking to the Cart
 
-        public Cart Cart { get; set; } // Navigation property
+        public Cart? Cart { get; set; } // Navigation property
 
         [Required]
         public int ProductId { get; set; } // Foreign key linking to the Product
 
-        public Product Product { get; set; } // Navigation property
+        public Product? Product { get; set; } // Navigation property
 
         [Required]
         public int Quantity { get; set; }

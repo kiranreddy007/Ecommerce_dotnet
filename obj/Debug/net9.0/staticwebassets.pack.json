@@ -1,8 +1,20 @@
 {
   "Files": [
     {
+      "Id": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg",
+      "PackagePath": "staticwebassets/images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg"
+    },
+    {
+      "Id": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg",
+      "PackagePath": "staticwebassets/images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg"
+    },
+    {
       "Id": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg",
       "PackagePath": "staticwebassets/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg"
+    },
+    {
+      "Id": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg",
+      "PackagePath": "staticwebassets/images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg"
     },
     {
       "Id": "obj/Debug/net9.0/staticwebassets/msbuild.EcommerceBackend.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

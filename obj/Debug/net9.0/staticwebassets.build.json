@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "nVve3WFi7x9pIzeJvsQoEwOmqdUscFXu0JQID2qoJB0=",
+  "Hash": "F7IkkHHgLVVf8vukXdh/pk2Ay7klKBCm15gYKg6VAgE=",
   "Source": "EcommerceBackend",
   "BasePath": "_content/EcommerceBackend",
   "Mode": "Default",
@@ -16,6 +16,48 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg",
+      "SourceId": "EcommerceBackend",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/",
+      "BasePath": "_content/EcommerceBackend",
+      "RelativePath": "images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c9f539k2dg",
+      "Integrity": "gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg"
+    },
+    {
+      "Identity": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg",
+      "SourceId": "EcommerceBackend",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/",
+      "BasePath": "_content/EcommerceBackend",
+      "RelativePath": "images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c9f539k2dg",
+      "Integrity": "gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg"
+    },
     {
       "Identity": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg",
       "SourceId": "EcommerceBackend",
@@ -36,9 +78,194 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg"
+    },
+    {
+      "Identity": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg",
+      "SourceId": "EcommerceBackend",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/",
+      "BasePath": "_content/EcommerceBackend",
+      "RelativePath": "images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c9f539k2dg",
+      "Integrity": "gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg"
     }
   ],
   "Endpoints": [
+    {
+      "Route": "images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.c9f539k2dg.jpg",
+      "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 17 Nov 2024 18:16:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c9f539k2dg"
+        },
+        {
+          "Name": "label",
+          "Value": "images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY="
+        }
+      ]
+    },
+    {
+      "Route": "images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg",
+      "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/13497878-0a18-4b87-98b4-d6054cca5cb7_dolo1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 17 Nov 2024 18:16:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY="
+        }
+      ]
+    },
+    {
+      "Route": "images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.c9f539k2dg.jpg",
+      "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 17 Nov 2024 18:14:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c9f539k2dg"
+        },
+        {
+          "Name": "label",
+          "Value": "images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY="
+        }
+      ]
+    },
+    {
+      "Route": "images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg",
+      "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/31ae9704-b4eb-42ab-98be-509a9df51a0e_dolo1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 17 Nov 2024 18:14:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY="
+        }
+      ]
+    },
     {
       "Route": "images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.e0qbkuqu98.jpg",
       "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/cc61968e-5e39-4ae2-8743-971258ca6912_dockhub.jpg",
@@ -118,6 +345,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-bkS0EREQW/t38lfMt9ADBRlHL0KagVWQdd5rii04HgA="
+        }
+      ]
+    },
+    {
+      "Route": "images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.c9f539k2dg.jpg",
+      "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 17 Nov 2024 18:16:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c9f539k2dg"
+        },
+        {
+          "Name": "label",
+          "Value": "images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY="
+        }
+      ]
+    },
+    {
+      "Route": "images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg",
+      "AssetFile": "/Users/kiranragi/Documents/FL/ECOM/EcommerceBackend/wwwroot/images/ea9e5730-4ffa-4391-b229-c1bf6e88eddb_dolo1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27669"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 17 Nov 2024 18:16:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gEN319Vp3ZkANRZAGlr0IxRtMEVI2ZxswKbNWoNRVhY="
         }
       ]
     }

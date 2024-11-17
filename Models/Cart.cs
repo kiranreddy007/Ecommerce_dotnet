@@ -10,8 +10,8 @@ namespace EcommerceBackend.Models
         [Required]
         public int UserId { get; set; } // Foreign key linking to the User
 
-        public User User { get; set; } // Navigation property
+        public User? User { get; set; } // Navigation property
 
-        public ICollection<CartItem> CartItems { get; set; } // List of items in the cart
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>(); // List of items in the cart
     }
 }
