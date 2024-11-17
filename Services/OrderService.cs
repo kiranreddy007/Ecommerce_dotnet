@@ -11,12 +11,15 @@ namespace EcommerceBackend.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICartRepository _cartRepository;
+
+        private readonly IProductRepository _productRepository; // Add this field
         private readonly ApplicationDbContext _context; // Add ApplicationDbContext
 
-        public OrderService(IOrderRepository orderRepository, ICartRepository cartRepository, ApplicationDbContext context)
+        public OrderService(IOrderRepository orderRepository, ICartRepository cartRepository,IProductRepository productRepository, ApplicationDbContext context)
         {
             _orderRepository = orderRepository;
             _cartRepository = cartRepository;
+            _productRepository = productRepository; // Inject the product repository
             _context = context; // Inject the database context
         }
 
@@ -35,79 +38,27 @@ namespace EcommerceBackend.Services
             return _orderRepository.GetOrderById(id);
         }
 
-        // public void PlaceOrder(int userId, List<int> cartItemIds)
-        // {
-        //     // Retrieve and validate the user's cart items
-        //     var cartItems = _cartRepository.GetCartItemsByIds(cartItemIds)
-        //         .Where(ci => ci.Cart.UserId == userId)
-        //         .ToList();
-
-        //     if (cartItems == null || !cartItems.Any())
-        //     {
-        //         throw new Exception("No valid cart items found for the order or the items do not belong to the user.");
-        //     }
-
-        //     // Calculate the total amount for the order
-        //     var totalAmount = cartItems.Sum(ci => ci.Price);
-
-        //     // Create the order
-        //     var order = new Order
-        //     {
-        //         UserId = userId,
-        //         TotalAmount = totalAmount,
-        //         OrderItems = cartItems.Select(ci => new OrderItem
-        //         {
-        //             ProductId = ci.ProductId,
-        //             Quantity = ci.Quantity,
-        //             Price = ci.Price
-        //         }).ToList()
-        //     };
-
-        //     // Use a transaction to ensure atomicity
-        //     using var transaction = _context.Database.BeginTransaction(); // Use ApplicationDbContext
-        //     try
-        //     {
-        //         _orderRepository.CreateOrder(order);
-        //         _cartRepository.RemoveCartItems(cartItemIds);
-        //         transaction.Commit();
-        //     }
-        //     catch
-        //     {
-        //         transaction.Rollback();
-        //         throw;
-        //     }
-        // }
+        
 
         public void PlaceOrder(int userId, List<int> cartItemIds)
 {
     // Retrieve and validate the cart items
-    var cartItems = _cartRepository.GetCartItemsByIds(cartItemIds)
-        .ToList();
+    var cartItems = _cartRepository.GetCartItemsByIds(cartItemIds).ToList();
 
     if (cartItems == null || !cartItems.Any())
     {
         throw new Exception("No valid cart items found for the order.");
     }
 
-    // Check for null items or invalid data
-    var validItems = cartItems
-        .Where(ci => ci != null && cartItemIds.Contains(ci.Id))
-        .ToList();
-
-    if (!validItems.Any())
-    {
-        throw new Exception("No valid cart items available for processing.");
-    }
-
     // Calculate total amount
-    var totalAmount = validItems.Sum(ci => ci.Price);
+    var totalAmount = cartItems.Sum(ci => ci.Price);
 
     // Create the order
     var order = new Order
     {
         UserId = userId,
         TotalAmount = totalAmount,
-        OrderItems = validItems.Select(ci => new OrderItem
+        OrderItems = cartItems.Select(ci => new OrderItem
         {
             ProductId = ci.ProductId,
             Quantity = ci.Quantity,
@@ -115,12 +66,35 @@ namespace EcommerceBackend.Services
         }).ToList()
     };
 
-    // Save order and update cart
+    // Use a transaction for atomic operations
     using var transaction = _context.Database.BeginTransaction();
     try
     {
+        // Create the order
         _orderRepository.CreateOrder(order);
+
+        // Update stock for each product
+        foreach (var cartItem in cartItems)
+        {
+            var product = _productRepository.GetProductById(cartItem.ProductId);
+            if (product == null)
+            {
+                throw new Exception($"Product with ID {cartItem.ProductId} not found.");
+            }
+
+            if (product.Stock < cartItem.Quantity)
+            {
+                throw new Exception($"Insufficient stock for product {product.Name}.");
+            }
+
+            product.Stock -= cartItem.Quantity; // Reduce stock
+            _productRepository.UpdateProduct(product); // Update product in database
+        }
+
+        // Remove items from the cart
         _cartRepository.RemoveCartItems(cartItemIds);
+
+        // Commit transaction
         transaction.Commit();
     }
     catch
