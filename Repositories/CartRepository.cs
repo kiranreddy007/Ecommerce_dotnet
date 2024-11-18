@@ -140,5 +140,12 @@ namespace EcommerceBackend.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public CartItem GetCartItemById(int cartItemId)
+{
+    return _context.CartItems
+        .Include(ci => ci.Product)  // Ensure Product is loaded
+        .FirstOrDefault(ci => ci.Id == cartItemId);
+}
     }
 }

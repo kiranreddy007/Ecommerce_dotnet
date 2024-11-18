@@ -5,7 +5,7 @@ namespace EcommerceBackend.Repositories
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetFilteredProducts(string category, string search, string sortBy, string order, bool? hasDiscount);
+        IEnumerable<Product> GetFilteredProducts(List<string> categories, string search, string sortBy, string order, bool? hasDiscount);
         IEnumerable<Product> GetAllProducts();
         Product GetProductById(int id);
         void AddProduct(Product product);

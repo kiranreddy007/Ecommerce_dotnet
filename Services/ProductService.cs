@@ -13,9 +13,9 @@ namespace EcommerceBackend.Services
             _productRepository = productRepository;
         }
 
-        public IEnumerable<Product> GetFilteredProducts(string category, string search, string sortBy, string order, bool? hasDiscount)
+        public IEnumerable<Product> GetFilteredProducts(List<string> categories, string search, string sortBy, string order, bool? hasDiscount)
         {
-            return _productRepository.GetFilteredProducts(category, search, sortBy, order, hasDiscount);
+            return _productRepository.GetFilteredProducts(categories, search, sortBy, order, hasDiscount);
         }
 
         public IEnumerable<Product> GetAllProducts()

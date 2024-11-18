@@ -19,7 +19,7 @@ namespace EcommerceBackend.Services
             return _cartRepository.GetCartByUserId(userId);
         }
 
-        public void AddToCart(int userId, int productId, int quantity)
+       public void AddToCart(int userId, int productId, int quantity)
 {
     if (quantity <= 0)
         throw new ArgumentException("Quantity must be greater than 0.", nameof(quantity));
@@ -33,18 +33,24 @@ namespace EcommerceBackend.Services
     var cart = _cartRepository.GetCartByUserId(userId);
     if (cart == null)
     {
-        // Create a new cart for the user
-        cart = new Cart { UserId = userId };
+        // Create a new cart for the user if it doesn't exist
+        cart = new Cart { UserId = userId, CartItems = new List<CartItem>() };
         _cartRepository.CreateCart(cart);
     }
 
+    // Ensure cart.CartItems is initialized
+    cart.CartItems ??= new List<CartItem>();
+
     // Check if the product is already in the cart
-    var cartItem = cart.CartItems?.FirstOrDefault(ci => ci.ProductId == productId);
+    var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+
     if (cartItem != null)
     {
         // Update quantity and price if item already exists
-        cartItem.Quantity += quantity;
+        cartItem.Quantity = cartItem.Quantity+quantity;
         cartItem.Price = cartItem.Quantity * product.Price;
+
+        // Persist changes to the cart item
         _cartRepository.UpdateCartItem(cartItem);
     }
     else
@@ -57,27 +63,36 @@ namespace EcommerceBackend.Services
             Quantity = quantity,
             Price = quantity * product.Price
         };
+
         _cartRepository.AddToCart(newCartItem);
+
+        // Add the new cart item to the cart's in-memory list to keep it consistent
+        cart.CartItems.Add(newCartItem);
     }
 }
 
-        public void UpdateCartItem(int cartItemId, int quantity)
-        {
-            var cartItem = _cartRepository.GetCartByUserId(cartItemId)?.CartItems.FirstOrDefault(ci => ci.Id == cartItemId);
-            if (cartItem != null && quantity > 0)
-            {
-                cartItem.Quantity = quantity;
-                if (cartItem.Product != null)
-                {
-                    cartItem.Price = quantity * cartItem.Product.Price;
-                }
-                else
-                {
-                    throw new Exception("Product associated with the cart item is null.");
-                }
-                _cartRepository.UpdateCartItem(cartItem);
-            }
-        }
+
+       public void UpdateCartItem(int cartItemId, int quantity)
+{
+    if (quantity <= 0)
+        throw new ArgumentException("Quantity must be greater than 0.", nameof(quantity));
+
+    // Retrieve the CartItem by its ID
+    var cartItem = _cartRepository.GetCartItemById(cartItemId);
+    if (cartItem == null)
+        throw new Exception($"CartItem with ID {cartItemId} does not exist.");
+
+    // Ensure the associated Product exists
+    if (cartItem.Product == null)
+        throw new Exception($"Product associated with CartItem ID {cartItemId} does not exist.");
+
+    // Update the CartItem's quantity and price
+    cartItem.Quantity = quantity;
+    cartItem.Price = quantity * cartItem.Product.Price;
+
+    // Persist the changes
+    _cartRepository.UpdateCartItem(cartItem);
+}
 
         public void RemoveFromCart(int cartItemId)
         {

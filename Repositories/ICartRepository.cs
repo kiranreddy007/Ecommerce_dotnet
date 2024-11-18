@@ -12,6 +12,8 @@ namespace EcommerceBackend.Repositories
         void RemoveFromCart(int cartItemId);
         void ClearCart(int userId);
         
+        CartItem GetCartItemById(int cartItemId);
+        
         // Retrieve cart items by their IDs
         IEnumerable<CartItem> GetCartItemsByIds(List<int> cartItemIds);
 

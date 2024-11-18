@@ -24,14 +24,18 @@ namespace EcommerceBackend.Controllers
         }
         
 
-        [HttpGet]
-        public IActionResult GetFilteredProducts([FromQuery] string? category, [FromQuery] string? search,
-                                                 [FromQuery] string? sortBy, [FromQuery] string? order = "asc", 
-                                                 [FromQuery] bool? hasDiscount = null)
-        {
-            var products = _productService.GetFilteredProducts(category, search, sortBy, order, hasDiscount);
-            return Ok(products);
-        }
+        
+       [HttpGet]
+public IActionResult GetFilteredProducts([FromQuery] List<string>? categories, 
+                                         [FromQuery] string? search, 
+                                         [FromQuery] string? sortBy, 
+                                         [FromQuery] string? order = "asc", 
+                                         [FromQuery] bool? hasDiscount = null)
+{
+
+    var products = _productService.GetFilteredProducts(categories, search, sortBy, order, hasDiscount);
+    return Ok(products);
+}
 
         [HttpGet("{id}")]
         public IActionResult GetProductById(int id)

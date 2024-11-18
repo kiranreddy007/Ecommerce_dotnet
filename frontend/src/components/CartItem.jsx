@@ -9,9 +9,12 @@ const CartItem = ({ item, onCartUpdate }) => {
     if (newQuantity < 1) return;
 
     try {
-      await axios.post(`/api/cart/${item.product.id}?quantity=${newQuantity}`);
+      await axios.put(`/api/cart/${item.id}?quantity=${newQuantity}`);
       setQuantity(newQuantity);
       if (onCartUpdate) onCartUpdate();
+
+      //refresh the page
+      
     } catch (error) {
       console.error("Error updating quantity:", error);
     }
@@ -19,8 +22,11 @@ const CartItem = ({ item, onCartUpdate }) => {
 
   const handleRemove = async () => {
     try {
-      await axios.delete(`/api/cart/remove/${item.id}`);
+      await axios.delete(`/api/cart/${item.id}`);
       if (onCartUpdate) onCartUpdate();
+
+      //refresh the page
+      window.location.reload();
     } catch (error) {
       console.error("Error removing item:", error);
     }

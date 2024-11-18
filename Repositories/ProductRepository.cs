@@ -14,40 +14,51 @@ namespace EcommerceBackend.Repositories
             _context = context;
         }
 
-        public IEnumerable<Product> GetFilteredProducts(string category, string search, string sortBy, string order, bool? hasDiscount)
+       public IEnumerable<Product> GetFilteredProducts(List<string> categories, string search, string sortBy, string order, bool? hasDiscount)
+{
+    var products = _context.Products.AsQueryable();
+
+    // Apply database-side filters first
+    if (!string.IsNullOrEmpty(search))
+    {
+        products = products.Where(p =>
+            p.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+            p.Description.Contains(search, StringComparison.OrdinalIgnoreCase));
+    }
+
+    if (hasDiscount.HasValue)
+    {
+        products = products.Where(p => (p.Discount ?? 0) > 0 == hasDiscount.Value);
+    }
+
+    // Switch to client-side evaluation for unsupported operations
+    var productList = products.ToList();
+
+    // Filter by categories (in memory)
+    if (categories != null && categories.Any())
+    {
+        var normalizedCategories = categories.Select(category => category.Trim().ToLower()).ToList();
+
+        productList = productList.Where(p =>
+            p.Category.Split(',')
+                .Select(c => c.Trim().ToLower())
+                .Any(c => normalizedCategories.Contains(c)))
+            .ToList();
+    }
+
+    // Apply sorting
+    if (!string.IsNullOrEmpty(sortBy))
+    {
+        productList = sortBy.ToLower() switch
         {
-            var query = _context.Products.AsQueryable();
+            "price" => order == "desc" ? productList.OrderByDescending(p => p.Price).ToList() : productList.OrderBy(p => p.Price).ToList(),
+            "name" => order == "desc" ? productList.OrderByDescending(p => p.Name).ToList() : productList.OrderBy(p => p.Name).ToList(),
+            _ => productList
+        };
+    }
 
-            if (!string.IsNullOrEmpty(category))
-            {
-                query = query.Where(p => p.Category.ToLower() == category.ToLower());
-            }
-            Console.WriteLine("Search: " + search);
-            if (!string.IsNullOrEmpty(search))
-            {
-                query = query.Where(p => p.Name.ToLower().Contains(search.ToLower()));
-            }
-
-            if (hasDiscount.HasValue && hasDiscount.Value)
-            {
-                query = query.Where(p => p.Discount.HasValue && p.Discount > 0);
-            }
-
-            if (!string.IsNullOrEmpty(sortBy))
-            {
-                query = sortBy.ToLower() switch
-                {
-                    "price" => order.ToLower() == "desc" ? query.OrderByDescending(p => p.Price) : query.OrderBy(p => p.Price),
-                    "discount" => order.ToLower() == "desc" ? query.OrderByDescending(p => p.Discount) : query.OrderBy(p => p.Discount),
-                    _ => query
-                };
-            }
-
-
-
-            return query.ToList();
-        }
-
+    return productList;
+}
         public IEnumerable<Product> GetAllProducts()
         {
             return _context.Products.ToList();
