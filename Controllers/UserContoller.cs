@@ -65,7 +65,7 @@ public IActionResult Login([FromBody] LoginRequest request)
     var role = existingUser.Role;
     var token = JwtHelper.GenerateJwtToken(existingUser.Email, role, existingUser.Id);
 
-    return Ok(new { token });
+    return Ok(new { token ,role});
 }
 
         [HttpPut("{id}")]
