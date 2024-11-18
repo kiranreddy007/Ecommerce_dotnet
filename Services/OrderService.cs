@@ -40,7 +40,7 @@ namespace EcommerceBackend.Services
 
         
 
-        public void PlaceOrder(int userId, List<int> cartItemIds)
+        public void PlaceOrder(int userId, List<int> cartItemIds,string ShippingFirstName,string ShippingLastName,string ShippingAddress,string ShippingCity,string ShippingPostalCode)
 {
     // Retrieve and validate the cart items
     var cartItems = _cartRepository.GetCartItemsByIds(cartItemIds).ToList();
@@ -58,6 +58,12 @@ namespace EcommerceBackend.Services
     {
         UserId = userId,
         TotalAmount = totalAmount,
+        ShippingFirstName = ShippingFirstName,
+        ShippingLastName = ShippingLastName,
+        ShippingAddress = ShippingAddress,
+        ShippingCity = ShippingCity,
+        ShippingPostalCode = ShippingPostalCode,
+        
         OrderItems = cartItems.Select(ci => new OrderItem
         {
             ProductId = ci.ProductId,

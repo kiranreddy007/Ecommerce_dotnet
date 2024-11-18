@@ -18,13 +18,7 @@ namespace EcommerceBackend.Repositories
 {
     var products = _context.Products.AsQueryable();
 
-    // Apply database-side filters first
-    if (!string.IsNullOrEmpty(search))
-    {
-        products = products.Where(p =>
-            p.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
-            p.Description.Contains(search, StringComparison.OrdinalIgnoreCase));
-    }
+   
 
     if (hasDiscount.HasValue)
     {
@@ -45,6 +39,13 @@ namespace EcommerceBackend.Repositories
                 .Any(c => normalizedCategories.Contains(c)))
             .ToList();
     }
+    if (!string.IsNullOrEmpty(search))
+    {
+        productList = productList.Where(p =>
+            p.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+            p.Description.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
+
 
     // Apply sorting
     if (!string.IsNullOrEmpty(sortBy))

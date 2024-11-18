@@ -14,6 +14,7 @@ const CartItem = ({ item, onCartUpdate }) => {
       if (onCartUpdate) onCartUpdate();
 
       //refresh the page
+      window.location.reload();
       
     } catch (error) {
       console.error("Error updating quantity:", error);

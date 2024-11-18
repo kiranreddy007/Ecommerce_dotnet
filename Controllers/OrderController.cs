@@ -25,7 +25,7 @@ namespace EcommerceBackend.Controllers
             return Ok(_orderService.GetOrdersByUserId(userId));
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
 [Authorize]
 public IActionResult PlaceOrder([FromBody] PlaceOrderRequest request )
 {
@@ -34,8 +34,15 @@ public IActionResult PlaceOrder([FromBody] PlaceOrderRequest request )
         return BadRequest(new { message = "The cartItemIds field is required and cannot be empty." });
     }
 
+    //shipping info and payment info add here
+
+    var ShippingFirstName = request.ShippingFirstName;
+    var ShippingLastName = request.ShippingLastName;
+    var ShippingAddress = request.ShippingAddress;
+
+
     var userId = int.Parse(User.Claims.First(c => c.Type == "Id").Value);
-    _orderService.PlaceOrder(userId, request.CartItemIds);
+    _orderService.PlaceOrder(userId, request.CartItemIds, ShippingFirstName, ShippingLastName, ShippingAddress, request.ShippingCity, request.ShippingPostalCode);
 
     return Ok(new { message = "Order placed successfully." });
 }

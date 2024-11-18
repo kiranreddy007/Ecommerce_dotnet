@@ -24,8 +24,9 @@ const Cart = () => {
 
   const calculateSubTotal = () => {
     if (!cartData?.cartItems?.$values) return 0;
+    console.log(cartData.cartItems.$values);
     return cartData.cartItems.$values.reduce(
-      (total, item) => total + item.price * item.quantity,
+      (total, item) => total + item.price ,
       0
     );
   };

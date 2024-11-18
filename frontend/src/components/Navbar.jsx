@@ -59,22 +59,36 @@ const Navbar = () => {
                 Tech
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/utilities">
-                Utilities
-              </a>
-            </li>
+            
 
             {window.localStorage.getItem("jwt_token") ? (
+
               <li className="nav-item">
                 <a className="nav-link" href="/cart">
                   Cart
                 </a>
+
               </li>
+              
             ) : (
               <li className="nav-item">
                 <a className="nav-link" href="/login">
                   Login
+                </a>
+              </li>
+            )}
+
+            {window.localStorage.getItem("jwt_token") ? (
+              <li className="nav-item">
+                <a className="nav-link" href="/orders">
+                  Orders
+                </a>
+
+              </li>
+            ) : (
+              <li className="nav-item">
+                <a className="nav-link" href="/signup">
+                  Signup
                 </a>
               </li>
             )}

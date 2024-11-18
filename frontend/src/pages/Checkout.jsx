@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import CheckoutCartItem from "../components/CheckoutCartItem";
+import axios from "../utils/axios";
 
 const Checkout = () => {
   const {
@@ -8,24 +8,66 @@ const Checkout = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const items = [
-    { id: 1, name: "Item 1", price: 20, quantity: 2 },
-    { id: 2, name: "Item 2", price: 15, quantity: 1 },
-    { id: 3, name: "Item 3", price: 25, quantity: 1 },
-    { id: 4, name: "Item 4", price: 30, quantity: 1 },
-  ];
 
-  const subTotal = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const serviceTax = subTotal * 0.025;
-  const processingFee = subTotal * 0.025;
-  const total = subTotal + serviceTax + processingFee;
+  const [items, setItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [selectedItems, setSelectedItems] = React.useState([]);
 
-  const onSubmit = (data) => {
-    console.log("Order Submitted:", data);
-    alert("Order placed successfully!");
+  React.useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get("/api/cart/");
+        setItems(response.data.cartItems.$values || []);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchCart();
+  }, []);
+
+  const toggleItemSelection = (itemId) => {
+    setSelectedItems((prevSelected) =>
+      prevSelected.includes(itemId)
+        ? prevSelected.filter((id) => id !== itemId)
+        : [...prevSelected, itemId]
+    );
+  };
+
+  if (loading) {
+    return <div className="container mt-4">Loading...</div>;
+  }
+
+  const subTotal = selectedItems.reduce((sum, itemId) => {
+    const item = items.find((item) => item.id === itemId);
+    return item ? sum + item.product.price * item.quantity : sum;
+  }, 0);
+
+  const onSubmit = async (data) => {
+    if (selectedItems.length === 0) {
+      alert("Please select at least one item to place an order.");
+      return;
+    }
+
+    try {
+      const requestPayload = {
+        cartItemIds: selectedItems,
+        shippingFirstName: data.firstName,
+        shippingLastName: data.lastName,
+        shippingAddress: data.address,
+        shippingCity: data.city,
+        shippingPostalCode: data.postalCode,
+      };
+
+      const response = await axios.post("/api/order/", requestPayload);
+      console.log("Order Submitted:", response.data);
+      alert("Order placed successfully!");
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Error placing order. Please try again.");
+    }
   };
 
   return (
@@ -37,7 +79,22 @@ const Checkout = () => {
         <h5>Items</h5>
         <div className="row mb-3">
           {items.map((item) => (
-            <CheckoutCartItem key={item.id} item={item} />
+            <div key={item.id} className="col-12">
+              <div className="d-flex align-items-center justify-content-between">
+                <div>
+                  <h6>{item.product.name}</h6>
+                  <p className="mb-1">Quantity: {item.quantity}</p>
+                  <p className="mb-1">Price: ${item.product.price.toFixed(2)}</p>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.includes(item.id)}
+                    onChange={() => toggleItemSelection(item.id)}
+                  />
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -121,49 +178,10 @@ const Checkout = () => {
               )}
             </div>
           </div>
+          <button type="submit" className="btn btn-dark">
+            Place Order
+          </button>
         </form>
-      </div>
-
-      {/* Payment Section */}
-      <div className="mb-4">
-        <h5>Payment</h5>
-        <div className="mb-3">
-          <label className="form-label">Card Number</label>
-          <input
-            type="text"
-            className={`form-control ${errors.cardNumber ? "is-invalid" : ""}`}
-            {...register("cardNumber", { required: "Card Number is required" })}
-          />
-          {errors.cardNumber && (
-            <div className="invalid-feedback">{errors.cardNumber.message}</div>
-          )}
-        </div>
-        <div className="row">
-          <div className="col">
-            <label className="form-label">Expiry Date</label>
-            <input
-              type="text"
-              placeholder="MM/YY"
-              className={`form-control ${errors.expiry ? "is-invalid" : ""}`}
-              {...register("expiry", { required: "Expiry Date is required" })}
-            />
-            {errors.expiry && (
-              <div className="invalid-feedback">{errors.expiry.message}</div>
-            )}
-          </div>
-          <div className="col">
-            <label className="form-label">CVV</label>
-            <input
-              type="text"
-              placeholder="123"
-              className={`form-control ${errors.cvv ? "is-invalid" : ""}`}
-              {...register("cvv", { required: "CVV is required" })}
-            />
-            {errors.cvv && (
-              <div className="invalid-feedback">{errors.cvv.message}</div>
-            )}
-          </div>
-        </div>
       </div>
 
       {/* Summary Section */}
@@ -173,25 +191,6 @@ const Checkout = () => {
           <p>Subtotal:</p>
           <p>${subTotal.toFixed(2)}</p>
         </div>
-        <div className="d-flex justify-content-between">
-          <p>Service Tax (2.5%):</p>
-          <p>${serviceTax.toFixed(2)}</p>
-        </div>
-        <div className="d-flex justify-content-between">
-          <p>Processing Fee (2.5%):</p>
-          <p>${processingFee.toFixed(2)}</p>
-        </div>
-        <div className="d-flex justify-content-between fw-bold">
-          <p>Total:</p>
-          <p>${total.toFixed(2)}</p>
-        </div>
-      </div>
-
-      {/* Order Button */}
-      <div className="d-flex justify-content-end">
-        <button className="btn btn-dark" onClick={handleSubmit(onSubmit)}>
-          Order Now
-        </button>
       </div>
     </div>
   );

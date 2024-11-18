@@ -23,6 +23,7 @@ namespace EcommerceBackend.Repositories
         public IEnumerable<Order> GetOrdersByUserId(int userId)
         {
             return _context.Orders
+                .AsNoTracking()
                 .Where(o => o.UserId == userId)
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
