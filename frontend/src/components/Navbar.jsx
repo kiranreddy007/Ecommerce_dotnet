@@ -1,11 +1,23 @@
 import React from "react";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
+  const [role, setRole] = useState("");
   const handleSearch = () => {
     window.location.href = `/search?q=${search}`;
   };
+
+  useEffect(() => {
+    const role = window.localStorage.getItem("role");
+    console.log(role);
+    setRole(role);
+  }
+  , []);
+
+
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
@@ -89,6 +101,15 @@ const Navbar = () => {
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
                   Signup
+                </a>
+              </li>
+            )}
+
+            
+            {role === "admin" || role === "Admin" && (
+              <li className="nav-item">
+                <a className="nav-link" href="/admin">
+                  Admin
                 </a>
               </li>
             )}

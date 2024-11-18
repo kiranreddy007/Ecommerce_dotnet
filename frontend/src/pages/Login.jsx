@@ -22,6 +22,7 @@ const LoginPage = () => {
 
       if (response.data.token) {
         localStorage.setItem("jwt_token", response.data.token);
+        localStorage.setItem("role", response.data.role);
         window.location.href = "/";
       }
     } catch (err) {

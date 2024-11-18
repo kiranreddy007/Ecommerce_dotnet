@@ -16,6 +16,9 @@ import Logout from "./pages/Logout.jsx";
 import Signup from "./pages/Signup.jsx";
 import Search from "./pages/Search.jsx";
 import Orders from "./pages/Orders.jsx";
+import "./App.css";
+import Admin from "./pages/Admin.jsx";
+import AddProduct from "./pages/AddProduct.jsx";
 
 function App() {
   return (
@@ -33,6 +36,8 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/add-product" element={<AddProduct />} />
       </Routes>
     </BrowserRouter>
   );
