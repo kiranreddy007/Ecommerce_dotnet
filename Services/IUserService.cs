@@ -11,5 +11,7 @@ namespace EcommerceBackend.Services
         User GetUserById(int id);
         void RegisterUser(User user);
         void UpdateUser(User user); // New method for user updates
+
+        void UpdateUserRole(int id, string role); // New method for updating user role
     }
 }

@@ -89,6 +89,27 @@ public IActionResult Login([FromBody] LoginRequest request)
             return Ok(new { message = "User updated successfully" });
         }
 
+        //method to udpat user role
+        [HttpPatch("admin/{id}")]
+        [Authorize (Roles = "Admin")]
+        public IActionResult UpdateUserRole(int id, [FromBody] UpdateUserRoleRequest request)
+        {
+            if (request == null || string.IsNullOrWhiteSpace(request.Role))
+            {
+                return BadRequest(new { message = "The role field is required and cannot be empty." });
+            }
+
+            try
+            {
+                _userService.UpdateUserRole(id, request.Role);
+                return Ok(new { message = "User role updated successfully" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
         
     }
 }

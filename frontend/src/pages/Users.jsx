@@ -24,7 +24,7 @@ const Users = () => {
 
   const updateUserRole = async (userId, newRole) => {
     try {
-      await axios.put(`/api/users/${userId}`, { role: newRole });
+      await axios.patch(`/api/users/admin/${userId}`, { role: newRole });
       setUsers(
         users.map((user) =>
           user.id === userId ? { ...user, role: newRole } : user

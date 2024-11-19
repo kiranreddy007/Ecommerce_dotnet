@@ -49,5 +49,15 @@ namespace EcommerceBackend.Services
                 _userRepository.UpdateUser(existingUser);
             }
         }
+
+        public void UpdateUserRole(int id, string role)
+        {
+            var user = _userRepository.GetUserById(id);
+            if (user != null)
+            {
+                user.Role = role;
+                _userRepository.UpdateUser(user);
+            }
+        }
     }
 }
