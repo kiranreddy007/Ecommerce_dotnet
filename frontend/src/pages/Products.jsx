@@ -23,15 +23,7 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const deleteProduct = async (productId) => {
-    try {
-      await axios.delete(`/api/products/${productId}`);
-      setProducts(products.filter((product) => product.id !== productId));
-    } catch (err) {
-      console.error("Error deleting product:", err);
-      setError("Failed to delete product.");
-    }
-  };
+  
 
   return (
     <div>
@@ -49,9 +41,7 @@ const Products = () => {
               <Link to={`/admin/edit-product/${product.id}`} className="btn btn-sm btn-warning me-2">
                 Edit
               </Link>
-              <button className="btn btn-sm btn-danger" onClick={() => deleteProduct(product.id)}>
-                Delete
-              </button>
+              
             </div>
           </div>
         ))}

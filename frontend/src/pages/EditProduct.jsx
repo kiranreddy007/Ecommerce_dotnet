@@ -3,12 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
 
 const EditProduct = () => {
-  const { id } = useParams(); // Get the product ID from the URL
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,14 +13,16 @@ const EditProduct = () => {
     category: "",
     stock: "",
     discount: "",
+    imageFile: null,
   });
 
-  // Fetch product details on mount
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/api/products/${id}`);
-        setProduct(response.data);
         setFormData({
           name: response.data.name,
           price: response.data.price,
@@ -32,6 +30,7 @@ const EditProduct = () => {
           category: response.data.category,
           stock: response.data.stock,
           discount: response.data.discount,
+          imageFile: null, // Do not prefill the image
         });
         setLoading(false);
       } catch (err) {
@@ -53,9 +52,26 @@ const EditProduct = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`/api/products/${id}`, formData);
+      const formDataObj = new FormData();
+      formDataObj.append("name", formData.name);
+      formDataObj.append("category", formData.category);
+      formDataObj.append("description", formData.description);
+      formDataObj.append("price", formData.price);
+      formDataObj.append("stock", formData.stock);
+      formDataObj.append("discount", formData.discount);
+
+      if (formData.imageFile) {
+        formDataObj.append("imageFile", formData.imageFile);
+      }
+
+      await axios.put(`/api/products/${id}`, formDataObj, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       alert("Product updated successfully!");
-      navigate("/admin/products"); // Redirect to the products page
+      navigate("/admin/products");
     } catch (err) {
       console.error("Error updating product:", err);
       setError("Failed to update product.");
@@ -131,6 +147,17 @@ const EditProduct = () => {
             name="discount"
             value={formData.discount}
             onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Image</label>
+          <input
+            type="file"
+            className="form-control"
+            name="imageFile"
+            onChange={(e) =>
+              setFormData({ ...formData, imageFile: e.target.files[0] })
+            }
           />
         </div>
         <button type="submit" className="btn btn-primary">

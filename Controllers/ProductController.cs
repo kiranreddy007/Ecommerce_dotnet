@@ -156,6 +156,9 @@ public IActionResult UpdateProduct(int id, [FromForm] Product product, IFormFile
             return Ok(new { message = "Product deleted successfully" });
         }
 
+      
+
+
 
         [HttpPost("upload-image")]
 public async Task<IActionResult> UploadImage(IFormFile file)
@@ -182,5 +185,10 @@ public async Task<IActionResult> UploadImage(IFormFile file)
     var relativePath = Path.Combine("images", fileName);
     return Ok(new { imagePath = relativePath });
 }
+
+
+  
     }
+
+
 }
