@@ -25,7 +25,7 @@ const AdminOrders = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await axios.put(`/api/order/${orderId}`, { status: newStatus });
+      await axios.patch(`/api/order/${orderId}`, { status: newStatus });
       setOrders(
         orders.map((order) =>
           order.id === orderId ? { ...order, status: newStatus } : order

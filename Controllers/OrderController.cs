@@ -55,11 +55,27 @@ public IActionResult PlaceOrder([FromBody] PlaceOrderRequest request )
 }
 
         [HttpPatch("{orderId}")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult UpdateOrderStatus(int orderId, [FromBody] string status)
-        {
-            _orderService.UpdateOrderStatus(orderId, status);
-            return Ok(new { message = "Order status updated successfully." });
-        }
+[Authorize(Roles = "Admin")]
+public IActionResult UpdateOrderStatus(int orderId, [FromBody] UpdateOrderStatusRequest request)
+{
+    if (request == null || string.IsNullOrWhiteSpace(request.Status))
+    {
+        return BadRequest(new { message = "The status field is required and cannot be empty." });
+    }
+
+    try
+    {
+        _orderService.UpdateOrderStatus(orderId, request.Status);
+        return Ok(new { message = "Order status updated successfully." });
+    }
+    catch (KeyNotFoundException ex)
+    {
+        return NotFound(new { message = ex.Message });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new { message = "An error occurred while updating order status.", details = ex.Message });
+    }
+}
     }
 }
