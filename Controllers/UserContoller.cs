@@ -23,6 +23,7 @@ namespace EcommerceBackend.Controllers
         public IActionResult GetAllUsers()
         {
             var users = _userService.GetAllUsers();
+
             return Ok(users);
         }
 
@@ -87,5 +88,7 @@ public IActionResult Login([FromBody] LoginRequest request)
             _userService.UpdateUser(user);
             return Ok(new { message = "User updated successfully" });
         }
+
+        
     }
 }

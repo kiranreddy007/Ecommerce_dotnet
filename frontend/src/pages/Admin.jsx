@@ -1,48 +1,44 @@
-//admin cms page
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Products from "./Products";
+import AdminOrders from "./AdminOrders"; // Import the new AdminOrders component
 
-import axios from "../utils/axios";
-import Product from "../components/Product";
+import Users from "./Users";
 
 const Admin = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    
-    useEffect(() => {
-        const fetchProducts = async () => {
-        try {
-            const response = await axios.get("/api/products");
-            setProducts(response.data.$values || []);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            setError("Failed to load products");
-            setLoading(false);
-        }
-        };
-    
-        fetchProducts();
-    }, []);
-    
-    return (
-        <div className="container mt-4">
-        <h4 className="mt-4 ps-2">Products</h4>
-        <div className="row m-0">
-            {products.map((product) => (
-            <Product key={product.id} product={product} />
-            ))}
-    
-            {loading && <div className="text-center">Loading...</div>}
-            {error && <div className="text-center">{error}</div>}
-        </div>
-    
-        <Link to="/admin/add-product" className="btn btn-primary mt-4">
-            Add Product
-        </Link>
-        </div>
-    );
-    };
+  const [activeTab, setActiveTab] = useState("products");
+
+  return (
+    <div className="container mt-4">
+      <h3 className="mb-4">Admin Panel</h3>
+      <div className="nav nav-tabs">
+        <button
+          className={`nav-link ${activeTab === "products" ? "active" : ""}`}
+          onClick={() => setActiveTab("products")}
+        >
+          Products
+        </button>
+        <button
+          className={`nav-link ${activeTab === "orders" ? "active" : ""}`}
+          onClick={() => setActiveTab("orders")}
+        >
+          Orders
+        </button>
+        <button
+          className={`nav-link ${activeTab === "users" ? "active" : ""}`}
+          onClick={() => setActiveTab("users")}
+        >
+          Users
+        </button>
+      </div>
+
+      <div className="tab-content mt-4">
+        {activeTab === "products" && <Products />}
+        {activeTab === "orders" && <AdminOrders />}
+        {activeTab === "users" && <Users />}
+      </div>
+    </div>
+  );
+};
 
 export default Admin;

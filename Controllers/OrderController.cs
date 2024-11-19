@@ -25,6 +25,13 @@ namespace EcommerceBackend.Controllers
             return Ok(_orderService.GetOrdersByUserId(userId));
         }
 
+        [HttpGet("all")]
+        [Authorize (Roles = "Admin")]
+        public IActionResult GetAllOrders()
+        {
+            return Ok(_orderService.GetAllOrders());
+        }
+
         [HttpPost]
 [Authorize]
 public IActionResult PlaceOrder([FromBody] PlaceOrderRequest request )

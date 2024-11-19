@@ -19,6 +19,10 @@ import Orders from "./pages/Orders.jsx";
 import "./App.css";
 import Admin from "./pages/Admin.jsx";
 import AddProduct from "./pages/AddProduct.jsx";
+import AdminOrders from "./pages/AdminOrders.jsx";
+import Users from "./pages/Users.jsx";
+import Products from "./pages/Products.jsx";
+import EditProduct from "./pages/EditProduct.jsx";
 
 function App() {
   return (
@@ -38,6 +42,12 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/add-product" element={<AddProduct />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/products" element={<Products />} />
+        <Route path="/admin/edit-product/:id" element={<EditProduct />} />
+
+
       </Routes>
     </BrowserRouter>
   );
