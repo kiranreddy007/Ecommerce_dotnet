@@ -21,5 +21,6 @@ namespace EcommerceBackend.Models
         public decimal? Discount { get; set; } // Added for filtering by discount
 
          public string? ImagePath { get; set; } 
+         public bool IsDeleted { get; set; } = false;
     }
 }

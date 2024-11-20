@@ -1,6 +1,6 @@
 //Add product page
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
 
 const AddProduct = () => {
@@ -14,6 +14,7 @@ const AddProduct = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,6 +41,12 @@ const AddProduct = () => {
         setPrice("");
         setDescription("");
         setImageFile(null);
+
+        // Redirect to admin page after adding product
+        navigate("/admin");
+
+
+    
         } catch (error) {
         console.error("Error adding product:", error);
         setLoading(false);
